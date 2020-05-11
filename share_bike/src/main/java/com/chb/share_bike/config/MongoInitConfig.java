@@ -24,6 +24,7 @@ public class MongoInitConfig {
 
         IndexOperations bikeIndexOps = template.indexOps(Bike.class);
         bikeIndexOps.ensureIndex(new Index().on("bikeNo", Sort.Direction.ASC));
+        bikeIndexOps.ensureIndex(new Index().on("location", Sort.Direction.ASC));
         MongoPersistentEntityIndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
         resolver.resolveIndexFor(Bike.class).forEach(bikeIndexOps::ensureIndex);
     }

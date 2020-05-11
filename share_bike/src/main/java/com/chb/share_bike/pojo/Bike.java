@@ -12,7 +12,7 @@ public class Bike {
     private String id;
 
     // 表经纬度
-//    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE), monggodb 4.x 不支持
+//    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private double[] location;
 
     private Long bikeNo;

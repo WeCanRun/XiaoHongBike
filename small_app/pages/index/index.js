@@ -173,6 +173,7 @@ Page({
    * 移动后地图地图视野发生变化触发的事件
    */
   regionchange: function(e) {
+    console.log(e)
     var that = this
     //获取移动后的位置
     var etype = e.type

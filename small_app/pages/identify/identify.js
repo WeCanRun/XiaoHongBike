@@ -1,6 +1,6 @@
 // pages/identify/identify.js
 
-var myUtil = require('../../utils/myUtils.js')
+var myUtils = require('../../utils/myUtils.js')
 
 Page({
 
@@ -72,7 +72,7 @@ Page({
     var globalData = getApp().globalData;
 
     // 获取手机号
-    var phoneNum = myUtil.get('phoneNum');
+    var phoneNum = myUtils.get('phoneNum');
 
     // 获取姓名和身份证号
     var name = e.detail.value.name;
@@ -90,10 +90,10 @@ Page({
         globalData.status = 3;
         wx.setStorageSync('status', 3);   
         myUtils.scanCode()
-         // 完成所有注册流程，跳转到首页
-        // wx.navigateTo({
-        //   url: '../index/index',
-        // });
+        //  完成所有注册流程，跳转到首页
+        wx.navigateTo({
+          url: '../index/index',
+        });
       }
     })
   }

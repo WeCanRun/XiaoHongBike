@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.geo.GeoResult;
 import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Metrics;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.NearQuery;
 import org.springframework.data.mongodb.core.query.Query;
@@ -34,7 +36,9 @@ public class BikeServiceImpl implements BikeService {
                 .query(new Query(Criteria.where("status").is(0)))
                 .limit(20);
         GeoResults<Bike> geoResults = mongoTemplate.geoNear(nearQuery, Bike.class);
-
+//        GeoResults<Bike> geoResults = mongoTemplate.query(Bike.class)
+//                .near(NearQuery.near(new GeoJsonPoint(longitude, latitude), Metrics.KILOMETERS))
+//                .all();
         return geoResults.getContent();
     }
 }
