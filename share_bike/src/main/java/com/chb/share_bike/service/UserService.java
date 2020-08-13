@@ -3,6 +3,9 @@ package com.chb.share_bike.service;
 
 import com.chb.share_bike.pojo.User;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 public interface UserService {
     String getVerifyCode(String countryCode, String phoneNum);
 
@@ -13,4 +16,6 @@ public interface UserService {
     User info(String phoneNum);
 
     boolean genVerifyCode(User user);
+
+    String wxLogin(String code) throws IOException, URISyntaxException;
 }

@@ -194,6 +194,21 @@ Page({
   onReady: function() {
     //创建map上下文
     this.mapctx = wx.createMapContext('myMap')
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success () {
+              wxLogin()
+            }
+          })
+        } else {
+          // 已经授权过了
+          wxLogin()
+        }
+      }
+    })
   },
 })
 
@@ -223,4 +238,24 @@ function findNearBikes(that, longitude, latitude) {
       })
     }
   })
+}
+
+function wxLogin() {
+  wx.login({
+    success (res) {
+      if (res.code) {
+        //发起网络请求
+        console.log(res.code)
+        wx.request({
+          url: 'http://127.0.0.1:8080/user/wxLogin?code=' + res.code,
+          method: "POST",
+          success: function(res1) {
+            console.log(res1)
+          }
+        })
+      } else {
+        console.log('登录失败！' + res.errMsg)
+      }
+    } 
+   })
 }

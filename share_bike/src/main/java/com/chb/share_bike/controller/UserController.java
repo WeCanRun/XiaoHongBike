@@ -6,6 +6,9 @@ import com.chb.share_bike.utils.Json;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+
 
 @RestController
 public class UserController {
@@ -17,9 +20,9 @@ public class UserController {
     public String getVerifyCode(@RequestBody User user) {
         String countryCode = user.getCountryCode();
         String phoneNum = user.getPhoneNum();
-        if (countryCode == null || phoneNum == null || "".equals(countryCode) || "".equals(phoneNum))
+        if (countryCode == null || phoneNum == null || "".equals(countryCode) || "".equals(phoneNum)) {
             return Json.respnose("500", "获取验证码失败");
-
+        }
         String verifyCode = "";
         try {
             verifyCode = userService.getVerifyCode(countryCode, phoneNum);
@@ -43,14 +46,14 @@ public class UserController {
 
     @PostMapping("/user/deposit")
     public boolean deposit(@RequestBody User user) {
-         boolean res = true;
-         try {
-             userService.update(user);
-         } catch (Exception e) {
-             res = false;
-             e.printStackTrace();
-         }
-         return res;
+        boolean res = true;
+        try {
+            userService.update(user);
+        } catch (Exception e) {
+            res = false;
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @PostMapping("user/identify")
@@ -69,5 +72,25 @@ public class UserController {
     public User userInfo(String phoneNum) {
         User user = userService.info(phoneNum);
         return user;
+    }
+
+
+    /**
+     * 微信登录
+     * @param code
+     * @return
+     */
+    @PostMapping("user/wxLogin")
+    public String wxLogin(String code) {
+        System.out.println("code: " + code);
+        String res = "";
+        try {
+            res = userService.wxLogin(code);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -80,5 +82,11 @@ public class UserServiceImpl implements UserService {
         String code = stringRedisTemplate.opsForValue().get(key);
 
         return code != null && code.equals(user.getVerifyCode());
+    }
+
+    @Override
+    public String wxLogin(String code) throws IOException, URISyntaxException {
+        String res = MyUtils.authCode2Session(code);
+        return res;
     }
 }
